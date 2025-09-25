@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>atividade</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.5s;
+        }
+        #container {
+            background-color: rgba(221, 219, 219, 0.8);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            border-radius: 10px;
+            text-align: center;
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 22px; }
+            p { font-size: 14px; }
+            #container { width: 70%; }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <p id="mensagem"></p>
+        <p id="hora"></p>
+        <p id="data"></p>
+        <p id="frasealeatoria"></p>
+        <p id="frase"></p>
+    </div>
+
+    <script>
+        let frases = [];
+
+        function trocar() {
+            const hora = new Date().getHours();
+
+            let cor;
+            let mensagem;
+
+            if (hora >= 6 && hora < 12) {
+                cor = "#FFD700"; // dourado manhã.
+                mensagem = "Bom dia! ☀ ";
+                frases = [
+                    "Comece o dia acreditando em você! ",
+                    "A manhã é perfeita para novos começos. ",
+                    "Que seu dia seja iluminado como o sol da manhã! "
+                ];
+            } else if (hora >= 12 && hora < 18) {
+                cor = "#FF8C00"; //laranja tarde
+                mensagem = "Boa tarde! ⛅ ";
+                frases = [
+                    "Continue firme, a tarde é cheia de oportunidades. ",
+                    "Aproveite cada momento da sua tarde! ",
+                    "Renove suas energias e siga em frente! "
+                ];
+            } else if (hora >= 18 && hora < 23) {
+                cor = "#1E90FF"; // azul crepusculo+.
+                mensagem = "Boa noite!🌑 ";
+                frases = [
+                    "Descanse e recarregue suas forças para amanhã. ",
+                    "A noite traz paz e reflexão. ",
+                    "Agradeça por tudo que conquistou hoje! "
+                ];
+            } else {
+                cor = "#2F4F4F"; // cinza escuro madrugada
+                mensagem = "Hora de Dormir! 😴 ";
+                frases = [
+                    "A madrugada é um convite ao descanso. ",
+                    "Sonhe alto enquanto descansa. ",
+                    "Que a tranquilidade da madrugada te inspire! "
+                ];
+            }
+            const agora = new Date();
+            const minutos = agora.getMinutes().toString().padStart(2, "0");
+            const segundos = agora.getSeconds().toString().padStart(2, "0");
+            const opcoes = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            const dataFormatada = agora.toLocaleDateString("pt-BR", opcoes);
+
+            document.body.style.background = cor;
+            document.getElementById("hora").innerHTML = "Agora são " + hora + ":" + minutos + ":" + segundos;
+            document.getElementById("data").innerHTML = "📅 " + dataFormatada;
+            document.getElementById("mensagem").innerHTML = mensagem;
+        }
+
+        function exibirFrasealeatoriaDoDia() {
+            const diaDasemana = new Date().getDay();
+            let frase2DoDia;
+
+            if (diaDasemana >= 1 && diaDasemana <= 5) {
+                frase2DoDia = "Cada dia é uma nova chance de fazer diferente e conquistar mais. ";
+            } else {
+                frase2DoDia = "Sábado é para recarregar e domingo é para se preparar para brilhar na semana que vem. ";
+            }
+            document.getElementById("frasealeatoria").innerHTML = frase2DoDia;
+        }
+
+        function trocarFrase() {
+            if (frases.length > 0) {
+                const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+                document.getElementById("frase").innerHTML = fraseAleatoria;
+            }
+        }
+
+        trocar();
+        setInterval(trocar, 1000);
+
+        trocarFrase();
+        setInterval(trocarFrase, 5000);
+
+        exibirFrasealeatoriaDoDia();
+
+
+ 
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(() => console.log("Service Worker registrado"))
+                .catch(err => console.log(" Erro no SW?", err));
+        }
+    </script>
+
+
+</body>
+
+</html>

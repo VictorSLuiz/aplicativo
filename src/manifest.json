@@ -1,0 +1,22 @@
+{
+    "name": "App relógio",
+    "short_name": "relógio",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "golenzinho.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "golemzáo.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        }
+
+    ]
+}
